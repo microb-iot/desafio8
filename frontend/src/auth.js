@@ -39,7 +39,7 @@ const auth = {
 
       if(requireAuth && !user) this.context.$router.push('auth')
       else if (guestOnly && user) {
-        axios.post("http://localhost:5000/api-1.0/login", {"user_id": user.uid}).then(response =>
+        axios.post("http://35.230.150.123:5000/api-1.0/login", {"user_id": user.uid}).then(response =>
           {
             console.log(response);
             }).catch(error => {
