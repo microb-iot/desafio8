@@ -51,34 +51,44 @@
 
       <md-app-content>
             <h1>Hello USER!</h1>
+
     <img :src="user.photoURL" width="100"> <br>
     <h3>{{user.displayName}}</h3>
     <p>{{user.email}}</p>
     <button @click="logOut">Log out</button>
+    <br><br><br>
+    <v-select :on-change="updateNetworks" :options="networksKeys"></v-select>
+    <pre>{{network}}</pre>
     <br><br><br>
     <pre>{{userUID}}</pre>
     <br><br><br>
     <pre>{{user}}</pre>
     <br><br><br>
     <pre>{{uData}}</pre>
+
       </md-app-content>
+
     </md-app>
 
-
   </div>
+
 </template>
 
 <script>
   import auth from '@/auth'
   import axios from 'axios'
+  import BasicSelect from '../components/BasicSelect'
+  import vSelect from 'vue-select'
 
   export default {
     name: 'auth-success',
     props: ['user_data'],
+    components: {BasicSelect, vSelect},
     data(){
       return {
           uData: {},
-          menuVisible: false
+          menuVisible: false,
+          network: null
       }
     },
 
@@ -97,12 +107,25 @@
       },
       userUID() {
         return this.$store.getters['user/user'].uid
+      },
+      networksKeys() {
+        var networks = [];
+        for (var key in this.uData.networks){
+          networks.push(key);
+          console.log(networks)
+        }
+        return networks
       }
 
     },
     methods: {
       logOut() {
         auth.logout()
+      },
+      updateNetworks: function(a){
+        console.log(a)
+        this.network = this.uData.networks[a]
+
       }
     }
   }
