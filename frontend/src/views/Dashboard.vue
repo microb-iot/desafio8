@@ -60,6 +60,7 @@
     <v-select :on-change="updateNetworks" :options="networksKeys"></v-select>
     <pre>{{network}}</pre>
     <br><br><br>
+    <DialogCustom :user_id="userUID"></DialogCustom>
     <pre>{{userUID}}</pre>
     <br><br><br>
     <pre>{{user}}</pre>
@@ -77,13 +78,13 @@
 <script>
   import auth from '@/auth'
   import axios from 'axios'
-  import BasicSelect from '../components/BasicSelect'
+  import DialogCustom from '../components/DialogCustom'
   import vSelect from 'vue-select'
 
   export default {
     name: 'auth-success',
     props: ['user_data'],
-    components: {BasicSelect, vSelect},
+    components: {DialogCustom, vSelect},
     data(){
       return {
           uData: {},

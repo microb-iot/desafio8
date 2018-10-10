@@ -5,7 +5,9 @@ import App from '@/App'
 import {router} from '@/router'
 import {store} from '@/store'
 import auth from '@/auth'
-import BasicSelect from './components/BasicSelect.vue'
+import DialogCustom from './components/DialogCustom.vue'
+import newNetworkForm from './components/newNetworkForm.vue'
+
 
 
 Vue.config.productionTip = false
