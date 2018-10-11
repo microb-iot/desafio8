@@ -1,11 +1,11 @@
 <template>
   <div>
     <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Preferences</md-dialog-title>
+      <md-dialog-title>New Network</md-dialog-title>
 
       <md-tabs md-dynamic-height>
-        <md-tab md-label="General">
-          <newNetworkForm :user_id="user_id"></newNetworkForm>
+        <md-tab md-label="Setup">
+          <newNetworkForm  v-on:created="hideDialog" :user_id="user_id"></newNetworkForm>
         </md-tab>
       </md-tabs>
 
@@ -15,7 +15,7 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <md-button class="md-primary md-raised" @click="showDialog = true">Show Dialog</md-button>
+    <md-button class="md-primary md-raised" @click="showDialog = true">New Network</md-button>
   </div>
 </template>
 
@@ -33,7 +33,13 @@ import newNetworkForm from './newNetworkForm'
         required: true
       }
     },
-    components: {newNetworkForm}
+    components: {newNetworkForm},
+    methods: {
+      hideDialog: function(text){
+        this.$emit('updated', text)
+        this.showDialog = false;
+      }
+    }
   }
 </script>
 

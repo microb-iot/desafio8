@@ -9,7 +9,7 @@
     <md-checkbox v-model="mqtt">MQTT</md-checkbox>
 
 <pre> {{[name, DDS, kafka, mqtt]}}</pre>
-<md-button class="md-primary" @click="postNetwork">Gipsy buttom</md-button>
+<md-button class="md-primary" @click="postNetwork">Create</md-button>
 
   </div>
 </template>
@@ -38,10 +38,11 @@
         }
       axios.post("http://35.230.150.123:5000/api-1.0/network/" + this.name, body).then(response =>
       {
-        this.uData = response.data;
+         this.$emit('created', response.data)
           }).catch(error => {
             console.log(error)
           })
+
       }
     }
 

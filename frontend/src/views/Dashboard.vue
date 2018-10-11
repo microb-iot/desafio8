@@ -60,7 +60,7 @@
     <v-select :on-change="updateNetworks" :options="networksKeys"></v-select>
     <pre>{{network}}</pre>
     <br><br><br>
-    <DialogCustom :user_id="userUID"></DialogCustom>
+    <DialogCustom v-on:updated="updateData" :user_id="userUID"></DialogCustom>
     <pre>{{userUID}}</pre>
     <br><br><br>
     <pre>{{user}}</pre>
@@ -122,6 +122,9 @@
     methods: {
       logOut() {
         auth.logout()
+      },
+      updateData(text) {
+        this.uData = text
       },
       updateNetworks: function(a){
         console.log(a)
