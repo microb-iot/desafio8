@@ -61,6 +61,7 @@
     <pre>{{network}}</pre>
     <br><br><br>
     <DialogCustom v-on:updated="updateData" :user_id="userUID"></DialogCustom>
+    <TopicDialogCustom v-if="network" :network="nameNetwork"></TopicDialogCustom>
     <pre>{{userUID}}</pre>
     <br><br><br>
     <pre>{{user}}</pre>
@@ -80,11 +81,12 @@
   import axios from 'axios'
   import DialogCustom from '../components/DialogCustom'
   import vSelect from 'vue-select'
+  import TopicDialogCustom from '../components/TopicDialogCustom'
 
   export default {
     name: 'auth-success',
     props: ['user_data'],
-    components: {DialogCustom, vSelect},
+    components: {DialogCustom, vSelect, TopicDialogCustom},
     data(){
       return {
           uData: {},
@@ -108,6 +110,9 @@
       },
       userUID() {
         return this.$store.getters['user/user'].uid
+      },
+      nameNetwork(){
+        return null
       },
       networksKeys() {
         var networks = [];
