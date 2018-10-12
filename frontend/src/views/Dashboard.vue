@@ -2,24 +2,31 @@
 
   <div v-if="user">
 
-        <md-app md-waterfall md-mode="flexible">
-      <md-app-toolbar class="md-large md-primary">
+    <md-app md-waterfall class='topMenu' md-mode="reveal">
+      <md-app-toolbar class="md-large">
         <div class="md-toolbar-row">
           <div class="md-toolbar-section-start">
             <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-              <md-icon>menu</md-icon>
+              <md-icon style="color: white">menu</md-icon>
             </md-button>
           </div>
 
           <div class="md-toolbar-section-end">
-            <md-button class="md-icon-button">
-              <md-icon>more_vert</md-icon>
-            </md-button>
+
+             <p  style="color: white; margin-top: 10px">Hello, {{user.displayName}}! <img :src="user.photoURL" width="50" style="margin-left: 20px"></p>
+
+             <!--<md-button class="md-icon-button">
+             <md-icon  style="color: white">more_vert</md-icon>
+
+            </md-button>-->
           </div>
         </div>
 
         <div class="md-toolbar-row md-toolbar-offset">
-          <span class="md-display-1">Microb-IoT</span>
+          <span class="md-display-1" style="color: white">
+            <img src= "../assets/logoMicrobIoT.png" width="90" height="90">
+            Microb-IoT
+          </span>
         </div>
       </md-app-toolbar>
 
@@ -28,8 +35,9 @@
 
         <md-list>
           <md-list-item>
-            <md-icon>move_to_inbox</md-icon>
-            <span class="md-list-item-text">Inbox</span>
+
+            <md-icon>exit_to_app</md-icon>
+            <span @click="logOut" class="md-list-item-text">Log out</span>
           </md-list-item>
 
           <md-list-item>
@@ -49,29 +57,16 @@
         </md-list>
       </md-app-drawer>
 
-      <md-app-content>
-            <h1>Hello USER!</h1>
-
-    <img :src="user.photoURL" width="100"> <br>
-    <h3>{{user.displayName}}</h3>
-    <p>{{user.email}}</p>
-    <button @click="logOut">Log out</button>
-    <br><br><br>
-    <v-select :on-change="updateNetworks" :options="networksKeys"></v-select>
-    <pre>{{network}}</pre>
-    <br><br><br>
-    <DialogCustom v-on:updated="updateData" :user_id="userUID"></DialogCustom>
-    <TopicDialogCustom v-if="network" :network="nameNetwork"></TopicDialogCustom>
-    <pre>{{userUID}}</pre>
-    <br><br><br>
-    <pre>{{user}}</pre>
-    <br><br><br>
-    <pre>{{uData}}</pre>
-
-      </md-app-content>
+    <md-app-content >
+      <div class="leftDiv">
+      <br>
+      <v-select :on-change="updateNetworks" :options="networksKeys" style="background: linear-gradient(135deg,#2f2f32,#262628)" ></v-select>
+      <DialogCustom v-on:updated="updateData" :user_id="userUID"></DialogCustom>
+      <TopicDialogCustom v-if="network" :network="nameNetwork"></TopicDialogCustom>
+      </div>
+    </md-app-content>
 
     </md-app>
-
   </div>
 
 </template>
@@ -157,16 +152,27 @@
     text-align: left;
   }
   .md-app {
-    max-height: max-content;
+    max-height: 100%;
     border: 1px solid rgba(#000, .12);
   }
 
   .md-app-toolbar {
     height: 196px;
+    background: rgb(0, 0, 0);
   }
   .md-drawer {
     width: 230px;
     max-width: calc(100vw - 125px);
   }
-</style>
 
+  .leftDiv {
+   width: 25%;
+   height: 500px;
+
+  }
+  .md-app-content {
+    background: linear-gradient(180deg,#222426 10px,#161719 100px);
+
+  }
+
+</style>
