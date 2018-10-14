@@ -62,7 +62,7 @@
       <br>
       <v-select :on-change="updateNetworks" :options="networksKeys" style="background: linear-gradient(135deg,#2f2f32,#262628)" ></v-select>
       <DialogCustom v-on:updated="updateData" :user_id="userUID"></DialogCustom>
-      <TopicDialogCustom v-if="network" :network="nameNetwork"></TopicDialogCustom>
+      <TopicDialogCustom v-if="network" :network="nameNetwork" ></TopicDialogCustom>
       </div>
     </md-app-content>
 
