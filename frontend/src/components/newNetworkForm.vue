@@ -8,7 +8,7 @@
     <md-checkbox v-model="kafka">Kafka</md-checkbox>
     <md-checkbox v-model="mqtt">MQTT</md-checkbox>
 
-<pre> {{[name, DDS, kafka, mqtt]}}</pre>
+
 <md-button class="md-primary" @click="postNetwork">Create</md-button>
 
   </div>

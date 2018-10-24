@@ -57,13 +57,37 @@
         </md-list>
       </md-app-drawer>
 
-    <md-app-content >
-      <div class="leftDiv">
-      <br>
-      <v-select :on-change="updateNetworks" :options="networksKeys" style="background: linear-gradient(135deg,#2f2f32,#262628)" ></v-select>
-      <DialogCustom v-on:updated="updateData" :user_id="userUID"></DialogCustom>
-      <TopicDialogCustom v-if="network" :network="nameNetwork" ></TopicDialogCustom>
+    <md-app-content class="row" >
+      
+      
+      <div class="col-lg-3 rightDiv">
+        <br>
+        <v-select :on-change="updateNetworks" :options="networksKeys" style="background: linear-gradient(135deg,#2f2f32,#262628)" ></v-select>
+        <br>
+
+        <md-list :md-expand-single="expandSingle" v-if="network"> 
+          <md-list-item md-expand>
+            <md-icon>rss_feed</md-icon>
+            <span class="md-list-item-text">topics</span>
+
+            <md-list slot="md-expand">
+              <md-list-item  class="md-inset" v-for="topic in topics" :key="topic" >{{topic}}<br></md-list-item>
+              <TopicDialogCustom v-if="network" v-on:updated="updateData" :network="networkName" :user_id="userUID" ></TopicDialogCustom>
+            </md-list>
+          </md-list-item>
+
+          
+        </md-list>
+        
+        <DialogCustom v-on:updated="updateData" :user_id="userUID"></DialogCustom>
+        
       </div>
+      <div v-if="network" class="col-lg-9">
+        <div v-if="network.topics.water" class="embed-container">
+          <iframe width="560" height="315" src="http://35.230.150.123:3000/d/3bjaCaxiz/home-sensors?orgId=2&kiosk" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+      
     </md-app-content>
 
     </md-app>
@@ -72,6 +96,7 @@
 </template>
 
 <script>
+
   import auth from '@/auth'
   import axios from 'axios'
   import DialogCustom from '../components/DialogCustom'
@@ -86,7 +111,9 @@
       return {
           uData: {},
           menuVisible: false,
-          network: null
+          network: null,
+          networkName: null,
+          expandSingle: false
       }
     },
 
@@ -106,9 +133,6 @@
       userUID() {
         return this.$store.getters['user/user'].uid
       },
-      nameNetwork(){
-        return null
-      },
       networksKeys() {
         var networks = [];
         for (var key in this.uData.networks){
@@ -116,6 +140,14 @@
           console.log(networks)
         }
         return networks
+      },
+      topics() {
+        var tpcs = [];
+        for (var key in this.network.topics){
+          tpcs.push(key);
+          console.log(tpcs)
+        }
+        return tpcs
       }
 
     },
@@ -124,10 +156,13 @@
         auth.logout()
       },
       updateData(text) {
+        console.log("cago en dios")
         this.uData = text
+        this.network = this.uData.networks[this.networkName]
       },
       updateNetworks: function(a){
         console.log(a)
+        this.networkName = a
         this.network = this.uData.networks[a]
 
       }
@@ -167,12 +202,29 @@
 
   .leftDiv {
    width: 25%;
-   height: 500px;
 
+  }
+
+  .rightDiv {
+    height: 752px
   }
   .md-app-content {
-    background: linear-gradient(180deg,#222426 10px,#161719 100px);
+    background: linear-gradient(180deg,#222426 20px,#161719 115px);
 
   }
+
+.embed-container {
+    position: relative;
+    padding-bottom: 75.00%;
+    height: 0;
+    overflow: hidden;
+}
+.embed-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
 </style>
